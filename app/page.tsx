@@ -1,4 +1,5 @@
 import { Container, Filters, Title, TopBar } from '@/components/common'
+import { ProductCard } from '@/components/common/product-card'
 
 export default function Home() {
 	return (
@@ -15,7 +16,14 @@ export default function Home() {
 					</div>
 
 					<div className='flex-1'>
-						<div className='flex flex-col gap-16'>Items list</div>
+						<div className='flex flex-col gap-16'>
+							<ProductCard
+								id={0}
+								name={'Cheeseburger-Pizza'}
+								price={100}
+								imageUrl={''}
+							/>
+						</div>
 					</div>
 				</div>
 			</Container>
