@@ -1,5 +1,5 @@
 import { Container, Filters, Title, TopBar } from '@/components/common'
-import { ProductCard } from '@/components/common/product-card'
+import ProductGroupList from '@/components/common/product-group-list'
 
 export default function Home() {
 	return (
@@ -10,18 +10,73 @@ export default function Home() {
 			<TopBar />
 
 			<Container className='mt-10 pb-14'>
-				<div className='flex gap-[60px]'>
+				<div className='flex gap-[80px]'>
 					<div className='w-[250px]'>
 						<Filters />
 					</div>
 
 					<div className='flex-1'>
 						<div className='flex flex-col gap-16'>
-							<ProductCard
-								id={0}
-								name={'Cheeseburger-Pizza'}
-								price={100}
-								imageUrl={''}
+							<ProductGroupList
+								title='Test'
+								items={[
+									{
+										id: 1,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 2,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 3,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 4,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									}
+								]}
+								categoryId={1}
+							/>
+
+							<ProductGroupList
+								title='Pizzas'
+								items={[
+									{
+										id: 1,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 2,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 3,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									},
+									{
+										id: 4,
+										name: 'Cheeseburger-pizza',
+										price: 550,
+										items: [{ price: 550 }]
+									}
+								]}
+								categoryId={2}
 							/>
 						</div>
 					</div>
