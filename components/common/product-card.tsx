@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Title } from '@/components/common/title'
 import { Button } from '@/components/ui'
 import { Plus } from 'lucide-react'
-import Image from 'next/image'
 
 interface Props {
 	id: number
@@ -25,7 +24,7 @@ export const ProductCard: React.FC<Props> = ({
 			<Link href={`/product/${id}`}>
 				<div>
 					<div className='flex justify-center p-6 bg-secondary rounded-lg h-[260px]'>
-						<Image className='w-[215px] h-[215px]' src={imageUrl} alt={name} />
+						<img className='w-[215px] h-[215px]' src={imageUrl} alt={name} />
 					</div>
 					<Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
 
