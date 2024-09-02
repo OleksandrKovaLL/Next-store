@@ -1,22 +1,23 @@
 import React from 'react'
 import { cn } from '@/shared/lib/utils'
-import { Title } from '@radix-ui/react-dialog'
 import { Button } from '@/shared/components/ui'
+import { Title } from '@/shared/components/common/title'
 
 interface Props {
 	imageUrl: string
 	name: string
-	ingredients: any[]
-	items?: any[]
+	price: number
+	loading?: boolean
 	className?: string
-	onClickAdd?: VoidFunction
+	onSubmit?: VoidFunction
 }
 
 export const ChooseProductForm: React.FC<Props> = ({
 	name,
-	items,
 	imageUrl,
-	onClickAdd,
+	onSubmit,
+	price,
+	loading,
 	className
 }) => {
 	return (
@@ -30,9 +31,12 @@ export const ChooseProductForm: React.FC<Props> = ({
 			</div>
 			<div className='w-[490px] bg-[#f7f6f5] p-7'>
 				<Title text={name} size='md' className='font-extrabold mb-1' />
-				<p className='text-gray-400'>text details</p>
-				<Button className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'>
-					Add to cart 300
+				<Button
+					loading={loading}
+					onClick={() => onSubmit?.()}
+					className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'
+				>
+					Add to cart {price} $
 				</Button>
 			</div>
 		</div>

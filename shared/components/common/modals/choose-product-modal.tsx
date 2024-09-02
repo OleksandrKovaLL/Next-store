@@ -6,8 +6,7 @@ import { cn } from '@/shared/lib/utils'
 
 import { useRouter } from 'next/navigation'
 import { ProductWithRelations } from '@/@types/prisma'
-import { ChooseProductForm } from '@/shared/components/common'
-import { ChoosePizzaForm } from '@/shared/components/common/choose-pizza-from'
+import { ProductForm } from '@/shared/components/common'
 import { Dialog } from '@/shared/components/ui'
 import { DialogContent } from '@/shared/components/ui/dialog'
 
@@ -18,7 +17,23 @@ interface Props {
 
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
 	const router = useRouter()
-	const isPizzaFrom = Boolean(product.items[0].pizzaType)
+
+	// const onSubmit = async (productItemId?: number, ingredients?: number[]) => {
+	// 	try {
+	// 		const itemId = productItemId ?? firstItem.id
+	//
+	// 		await addCartItem({
+	// 			productItemId: itemId,
+	// 			ingredients
+	// 		})
+	// 		toast.success('Pizza successfully added to cart')
+	// 		router.back()
+	// 	} catch (err) {
+	// 		toast.error('Failed to add pizza to cart')
+	// 		console.error(err)
+	// 	}
+	// }
+
 	return (
 		<Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
 			<DialogContent
@@ -27,20 +42,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
 					className
 				)}
 			>
-				{isPizzaFrom ? (
-					<ChoosePizzaForm
-						imageUrl={product.imageUrl}
-						name={product.name}
-						ingredients={product.ingredients}
-						items={product.items}
-					/>
-				) : (
-					<ChooseProductForm
-						imageUrl={product.imageUrl}
-						name={product.name}
-						ingredients={[]}
-					/>
-				)}
+				<ProductForm product={product} onSubmit={() => router.back()} />
 			</DialogContent>
 		</Dialog>
 	)

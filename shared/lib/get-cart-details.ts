@@ -21,8 +21,9 @@ export const getCartDetails = (data: CartDTO): ReturnProps => {
 	const items = data.items.map(item => ({
 		id: item.id,
 		quantity: item.quantity,
-		name: item.productItem.name,
+		name: item.productItem.product.name,
 		imageUrl: item.productItem.product.imageUrl,
+		disabled: false,
 		price: calcCartItemTotalPrice(item),
 		pizzaSize: item.productItem.size,
 		PizzaType: item.productItem.pizzaType,
@@ -30,9 +31,9 @@ export const getCartDetails = (data: CartDTO): ReturnProps => {
 			name: ingredient.name,
 			price: ingredient.price
 		}))
-	}))
+	})) as CartStateItem[]
 	return {
-		totalAmount: data.totalAmount,
-		items
+		items,
+		totalAmount: data.totalAmount
 	}
 }
