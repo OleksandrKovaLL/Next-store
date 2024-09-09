@@ -13,12 +13,13 @@ import {
 import Link from 'next/link'
 import { Button } from '@/shared/components/ui'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { useCartStore } from '@/shared/store'
 import { getCartItemDetails } from '@/shared/lib'
 import { CartDrawerItem } from '@/shared/components/common/cart-drawer-item'
 import Image from 'next/image'
 import { Title } from '@/shared/components/common/title'
 import { cn } from '@/shared/lib/utils'
+import { useCart } from '@/shared/hooks'
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 
 interface Props {
 	className?: string
@@ -28,29 +29,9 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 	className,
 	children
 }) => {
-	const [
-		items,
-		totalAmount,
-		fetchCartItems,
-		updateItemQuantity,
-		removeCartItem
-	] = useCartStore(state => [
-		state.items,
-		state.totalAmount,
-		state.fetchCartItems,
-		state.updateItemQuantity,
-		state.removeCartItem
-	])
+	const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
 
-	React.useEffect(() => {
-		fetchCartItems()
-	}, [])
-
-	const onClickCountButton = (
-		id: number,
-		quantity: number,
-		type: 'plus' | 'minus'
-	) => {
+	const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
 		const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
 		updateItemQuantity(id, newQuantity)
 	}
@@ -59,12 +40,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 		<Sheet>
 			<SheetTrigger asChild>{children}</SheetTrigger>
 			<SheetContent className='flex flex-col justify-between pb-0 bg-[#F4F1EE]'>
-				<div
-					className={cn(
-						'flex flex-col h-full',
-						!totalAmount && 'justify-center'
-					)}
-				>
+				<div className={cn('flex flex-col h-full', !totalAmount && 'justify-center')}>
 					{totalAmount > 0 && (
 						<SheetHeader>
 							<SheetTitle>
@@ -74,11 +50,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 					)}
 
 					{!totalAmount && (
-						<div
-							className={
-								'flex flex-col items-center justify-center w-72 mx-auto'
-							}
-						>
+						<div className={'flex flex-col items-center justify-center w-72 mx-auto'}>
 							<Image
 								src='/assets/images/empty-box.png'
 								alt='Empty cart'
@@ -113,8 +85,8 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 											imageUrl={item.imageUrl}
 											details={getCartItemDetails(
 												item.ingredients,
-												item.pizzaType,
-												item.pizzaSize
+												item.pizzaType as PizzaType,
+												item.pizzaSize as PizzaSize
 											)}
 											disabled={item.disabled}
 											name={item.name}
@@ -123,7 +95,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 											onClickCountButton={type =>
 												onClickCountButton(item.id, item.quantity, type)
 											}
-											onClickRemove={() => removeCartItem(item.id, 0)}
+											onClickRemove={() => removeCartItem(item.id)}
 										/>
 									</div>
 								))}
@@ -139,7 +111,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 
 										<span className='font-bold text-lg'>{totalAmount}</span>
 									</div>
-									<Link href='/cart'>
+									<Link href='/checkout'>
 										<Button type='submit' className='w-full h-12 text-base'>
 											Place order
 											<ArrowRight className='w-5 ml-2' />
